@@ -8,6 +8,7 @@ public class BankTester {
   public static void main(String args[]) {
     System.out.println(testAccountCreation());
     System.out.println(testSetPassword());
+    System.out.println(testDeposit());
   }
 
   public static boolean testAccountCreation() {
@@ -42,6 +43,32 @@ public class BankTester {
       String newPassword = randomPassword();
       account.setPasssword(newPassword);
       if (account.getPassword() != newPassword) return false;
+    }
+
+    return true;
+  }
+
+  public static boolean testDeposit() {
+    BankAccount accountOne = new BankAccount(1234, "password");
+    if (accountOne.getBalance() != 0) return false;
+
+    if (accountOne.deposit(-90)) return false;
+    if (accountOne.getBalance() != 0) return false;
+
+    if (!accountOne.deposit(100)) return false;
+    if (accountOne.getBalance() != 100) return false;
+
+    for (int i = 0; i < 100; i++) {
+      BankAccount account = new BankAccount(100, "abc");
+      double oldBalance = account.getBalance();
+      if (oldBalance != 0) return false;
+
+      double toAdd = rng.nextDouble();
+      boolean expected = true;
+      if (toAdd < 0) expected = false;
+
+      if (account.deposit(toAdd) != expected) return false;
+      if ((expected) && (account.getBalance() != (oldBalance + toAdd))) return false;
     }
 
     return true;
