@@ -10,6 +10,7 @@ public class BankTester {
     System.out.println(testSetPassword());
     System.out.println(testDeposit());
     System.out.println(testWithdraw());
+    System.out.println(testToString());
   }
 
   public static boolean testAccountCreation() {
@@ -100,6 +101,28 @@ public class BankTester {
 
       if (account.withdraw(toTake) != expected) return false;
       if ((expected) && (account.getBalance() != (oldBalance - toTake))) return false;
+    }
+
+    return true;
+  }
+
+  public static boolean testToString() {
+    BankAccount accountOne = new BankAccount(1234, "password");
+    if (!(accountOne.toString().equals("1234\\t0.0"))) return false;
+    accountOne.deposit(500);
+    if (!(accountOne.toString().equals("1234\\t500.0"))) return false;
+    accountOne.withdraw(100);
+    if (!(accountOne.toString().equals("1234\\t400.0"))) return false;
+
+    for (int i = 0; i < 100; i++) {
+      int id = rng.nextInt();
+      BankAccount account = new BankAccount(id, "abc");
+      int b = Math.abs(rng.nextInt());
+      double balance = Double.valueOf(b);
+      account.deposit(balance);
+
+      String expected = "" + id + "\\t" + balance;
+      if (!(account.toString().equals(expected))) return false;
     }
 
     return true;
