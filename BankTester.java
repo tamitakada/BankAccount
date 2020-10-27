@@ -9,6 +9,7 @@ public class BankTester {
     System.out.println(testAccountCreation());
     System.out.println(testSetPassword());
     System.out.println(testDeposit());
+    System.out.println(testWithdraw());
   }
 
   public static boolean testAccountCreation() {
@@ -69,6 +70,36 @@ public class BankTester {
 
       if (account.deposit(toAdd) != expected) return false;
       if ((expected) && (account.getBalance() != (oldBalance + toAdd))) return false;
+    }
+
+    return true;
+  }
+
+  public static boolean testWithdraw() {
+    BankAccount accountOne = new BankAccount(1234, "password");
+    accountOne.deposit(500);
+
+    if (accountOne.withdraw(-90)) return false;
+    if (accountOne.getBalance() != 500) return false;
+
+    if (!accountOne.withdraw(100)) return false;
+    if (accountOne.getBalance() != 400) return false;
+
+    if (accountOne.withdraw(9000)) return false;
+    if (accountOne.getBalance() != 400) return false;
+
+    for (int i = 0; i < 100; i++) {
+      BankAccount account = new BankAccount(100, "abc");
+      int b = Math.abs(rng.nextInt());
+      double oldBalance = Double.valueOf(b);
+      account.deposit(oldBalance);
+
+      double toTake = rng.nextDouble();
+      boolean expected = true;
+      if ((toTake < 0) || (oldBalance < toTake)) expected = false;
+
+      if (account.withdraw(toTake) != expected) return false;
+      if ((expected) && (account.getBalance() != (oldBalance - toTake))) return false;
     }
 
     return true;
