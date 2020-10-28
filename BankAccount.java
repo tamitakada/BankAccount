@@ -22,7 +22,7 @@ public class BankAccount {
     return accountID;
   }
 
-  public void setPasssword(String newPass) {
+  public void setPassword(String newPass) {
     password = newPass;
   }
 
@@ -39,7 +39,7 @@ public class BankAccount {
   }
 
   public String toString() {
-    return "" + accountID + "\\t" + balance;
+    return "" + accountID + "\t" + balance;
   }
 
   public String getPassword() {
