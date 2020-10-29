@@ -38,7 +38,7 @@ public class BankAccount {
     return true;
   }
 
-  public boolean authenticate(String password) {
+  private boolean authenticate(String password) {
     return this.password.equals(password);
   }
 
