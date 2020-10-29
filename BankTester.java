@@ -108,11 +108,11 @@ public class BankTester {
 
   public static boolean testToString() {
     BankAccount accountOne = new BankAccount(1234, "password");
-    if (!(accountOne.toString().equals("1234\t0.0"))) return false;
+    if (!(accountOne.toString().equals("#1234\t$0.0"))) return false;
     accountOne.deposit(500);
-    if (!(accountOne.toString().equals("1234\t500.0"))) return false;
+    if (!(accountOne.toString().equals("#1234\t$500.0"))) return false;
     accountOne.withdraw(100);
-    if (!(accountOne.toString().equals("1234\t400.0"))) return false;
+    if (!(accountOne.toString().equals("#1234\t$400.0"))) return false;
 
     for (int i = 0; i < 100; i++) {
       int id = rng.nextInt();
@@ -121,7 +121,7 @@ public class BankTester {
       double balance = Double.valueOf(b);
       account.deposit(balance);
 
-      String expected = "" + id + "\t" + balance;
+      String expected = "" + '#' + id + "\t$" + balance;
       if (!(account.toString().equals(expected))) return false;
     }
 
